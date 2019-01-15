@@ -17,7 +17,8 @@ module.exports['plugin'] = (opts, bs) => {
         },
         user: 'browsersync',
         pass: false,
-        use: true
+        use: true,
+        disableCheck: false
     }, opts);
 
 
@@ -56,6 +57,8 @@ module.exports['plugin'] = (opts, bs) => {
             let auth = basicAuth(req);
 
             if (auth && auth.name === opts.user && auth.pass === opts.pass) {
+                return next();
+            } else if(auth && disableCheck == true){
                 return next();
             } else {
                 res.statusCode = 401;
